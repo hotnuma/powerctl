@@ -24,46 +24,34 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cpuload.h"
-
-#include <fcntl.h>
 #include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-
-//#include <print.h>
-
-#include <stdint.h>
 
 #define PROC_STAT "/proc/stat"
 
-/* user, nice, system, interrupt(BSD specific), idle */
-struct cpu_load_struct
-{
-    unsigned long load[5];
-};
-
 static unsigned long oldtotal, oldused;
 
-unsigned long cpuload()
+double cpuload()
 {
-    FILE *fd;
     unsigned long long int user, unice, usystem, idle, iowait, irq, softirq, guest;
-    unsigned long cpu_used, used, total;
-    int nb_read;
+    unsigned long used, total;
 
-    fd = fopen(PROC_STAT, "r");
+    double cpu_used;
+
+    FILE *fd = fopen(PROC_STAT, "r");
     if (!fd)
     {
         //print("File /proc/stat not found!");
+
         return 0;
     }
 
-    /* Don't count steal time. It is neither busy nor free tiime. */
-    nb_read = fscanf (fd, "%*s %llu %llu %llu %llu %llu %llu %llu %*u %llu",
-                      &user, &unice, &usystem, &idle, &iowait, &irq, &softirq, &guest);
+    // Don't count steal time. It is neither busy nor free time.
+
+    int nb_read = fscanf(fd, "%*s %llu %llu %llu %llu %llu %llu %llu %*u %llu",
+                         &user, &unice, &usystem, &idle, &iowait, &irq, &softirq, &guest);
+
     fclose(fd);
+
     if (nb_read <= 4) iowait = 0;
     if (nb_read <= 5) irq = 0;
     if (nb_read <= 6) softirq = 0;
@@ -74,7 +62,7 @@ unsigned long cpuload()
 
     if ((total - oldtotal) != 0)
     {
-        cpu_used = (100 * (double)(used - oldused)) / (double)(total - oldtotal);
+        cpu_used = (double) (100.0 * (double) (used - oldused)) / (double) (total - oldtotal);
     }
     else
     {

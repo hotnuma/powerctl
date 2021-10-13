@@ -12,15 +12,16 @@ int main()
 
     int timeout = minutes * 60;
 
-    unsigned long cpu = 0;
+    double cpu = 0;
     int count = 0;
     int idle = 0;
+    int ret = 0;
 
     while (1)
     {
         cpu = cpuload();
 
-        if (cpu > 2)
+        if (cpu > 3.0)
         {
             count = 0;
         }
@@ -38,7 +39,7 @@ int main()
 
                 if (idle >= timeout)
                 {
-                    system("systemctl poweroff");
+                    ret = system("systemctl poweroff");
                     break;
                 }
 
@@ -52,7 +53,7 @@ int main()
         sleep(tick);
     }
 
-    return 0;
+    return ret;
 }
 
 
