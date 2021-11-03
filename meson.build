@@ -19,14 +19,13 @@ app_deps = [
     dependency('xscrnsaver'),
     dependency('x11'),
     dependency('xext'),
-#    dependency('libpcre'),
     dependency('tinycpp', static : true),
 ]
 
 app_src = [
+    'asound.cpp',
     'cpuload.cpp',
     'main.cpp',
-#    'PowerTool.cpp',
     'sysidle.cpp',
 ]
 
