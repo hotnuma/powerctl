@@ -1,9 +1,18 @@
 TEMPLATE = app
-
 TARGET = powerctl
-CONFIG = c++11
-DEFINES =
+CONFIG = c99 link_pkgconfig
+DEFINES = _GNU_SOURCE
 INCLUDEPATH =
+PKGCONFIG =
+
+PKGCONFIG += tinyc
+
+#PKGCONFIG += dbus-1
+#PKGCONFIG += libusb
+#PKGCONFIG += libxml-2.0
+#PKGCONFIG += polkit-gobject-1
+#PKGCONFIG += glib-2.0
+#PKGCONFIG += gio-2.0
 
 HEADERS = \
     asound.h \
@@ -11,13 +20,13 @@ HEADERS = \
     sysidle.h \
 
 SOURCES = \
-    0Temp.cpp \
-    asound.cpp \
-    cpuload.cpp \
-    main.cpp \
-    sysidle.cpp \
+    0Temp.c \
+    asound.c \
+    cpuload.c \
+    main.c \
+    sysidle.c \
 
-DISTFILES += \
+DISTFILES = \
     install.sh \
     License.txt \
     meson.build \

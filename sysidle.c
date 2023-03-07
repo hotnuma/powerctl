@@ -45,7 +45,7 @@ unsigned long sysidle()
 {
     unsigned long idle = 0;
 
-    Display *dpy = XOpenDisplay(nullptr);
+    Display *dpy = XOpenDisplay(NULL);
     if (!dpy)
     {
         //fprintf(stderr, "couldn't open display\n");

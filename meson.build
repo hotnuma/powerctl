@@ -1,37 +1,37 @@
 project(
     'powerctl',
-    ['cpp'],
+    ['c'],
     version : '1.0',
     license : 'GPL-2.0',
     default_options : [
-        'cpp_std=c++11',
+        'c_std=c99',
     ],
 )
 
-cpp_args = [
+c_args = [
     '-Wall',
-    '-fno-rtti',
-    '-fno-exceptions',
+    '-Wextra',
     '-O2',
+    '-D_GNU_SOURCE',
 ]
 
 app_deps = [
+    dependency('tinyc'),
     dependency('xscrnsaver'),
     dependency('x11'),
     dependency('xext'),
-    dependency('tinycpp', static : true),
 ]
 
 app_src = [
-    'asound.cpp',
-    'cpuload.cpp',
-    'main.cpp',
-    'sysidle.cpp',
+    'asound.c',
+    'cpuload.c',
+    'main.c',
+    'sysidle.c',
 ]
 
 executable(
-    'powerctl',
-    cpp_args : cpp_args,
+    meson.project_name(),
+    c_args : c_args,
     dependencies : app_deps,
     sources : app_src,
     install : true,
