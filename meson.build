@@ -25,6 +25,7 @@ app_deps = [
 app_src = [
     'asound.c',
     'cpuload.c',
+    'dmsg.c',
     'main.c',
     'sysidle.c',
 ]

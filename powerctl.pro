@@ -17,12 +17,14 @@ PKGCONFIG += tinyc
 HEADERS = \
     asound.h \
     cpuload.h \
+    dmsg.h \
     sysidle.h \
 
 SOURCES = \
     0Temp.c \
     asound.c \
     cpuload.c \
+    dmsg.c \
     main.c \
     sysidle.c \
 
