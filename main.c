@@ -6,10 +6,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-//#define scard "/proc/asound/card1/pcm0p/sub0/status"
-
-// 16h = 57600s
-// / 10 = 5760
+// 16 h = 57600 sec = 5700 ticks
+// 20 min = 1200 sec = 120 ticks
 
 int main(int argc, char **argv)
 {
@@ -28,7 +26,6 @@ int main(int argc, char **argv)
     }
 
     int minutes = 20;
-
     int timeout = minutes * 60;
     int tick = 10;
     double cputh = 10.0;
@@ -42,12 +39,6 @@ int main(int argc, char **argv)
     while (1)
     {
         sleep(tick);
-
-        //if (_is_running(scard))
-        //{
-        //    count = 0;
-        //    continue;
-        //}
 
         if (as_is_running(list))
         {
@@ -73,7 +64,9 @@ int main(int argc, char **argv)
 
             if (idle >= timeout)
             {
-                return system("systemctl poweroff");
+                int ret = system("systemctl poweroff");
+
+                return ret;
             }
 
             count = idle;
