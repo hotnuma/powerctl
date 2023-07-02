@@ -21,7 +21,7 @@ int as_parse_cards(CStringList *list)
     CStringAuto *filepath = cstr_new_size(32);
     char part[24];
 
-    while (cdirparser_read(dir, filepath))
+    while (cdirparser_read(dir, filepath, NULL))
     {
         if (cstr_endswith(filepath, "/status", true))
         {
